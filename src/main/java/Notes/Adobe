@@ -1,0 +1,225 @@
+Pattern - abc - (m)
+Text - abcabdfcbacd - (n)
+
+abc acb bca cab bac cba
+
+0,1,2,7,8
+
+You need to design an algorithm which will search for all the permutations of the pattern in the text
+
+
+hi
+
+
+
+//
+
+
+List<Integer> getPatternPermutationIndexes(String pattern,String text){
+	List<Integer> results = new ArrayList<>();
+	// edge cases
+	if(p.length() > text.length()){
+	 	return results;
+	}
+
+  //Initiailize
+  Integer pLength = pattern.length();
+  Integer tLength = text.length();
+  Map<Character,Integer> pFreq = new HashMap<>():
+  Map<Character,Integer> tFreq = new HashMap<>():
+
+	for(int i=0;i<pLength;i++){
+    Character key = pattern.charAt(i);
+    int freq = 1;
+  //  if(pFreq.containsKey(k)){
+  //    freq +=
+   //   pFreq.get(key);
+   // }
+    Integer eVal = pFreq.get(key);
+    if(eval != null){
+    	freq +=eval:;
+    }
+
+
+
+    pFreq.put(key,freq);
+  }
+
+  for(int i=0;i<pLength;i++){
+    Character key = text.charAt(i);
+    int freq = 1;
+    if(tFreq.containsKey(k)){
+      freq += tFreq.get(key);
+    }
+    tFreq.put(key,freq);
+  }
+
+  int si = 0;
+  // iterate for rest
+  if(isPermutation(pFreq,tFreq){
+   results.add(si);
+  }
+
+  for(int i = pLength;i<tLength;i++,si++){
+    int oFreq = tFreq.get(text.charAt(si));
+    if(oFreq == 1){
+      tFreq.remove(text.charAt(si));
+    }
+    else{
+      tFreq.put(text.charAt(si),tFreq.get(text.charAt(si)-1);
+    }
+
+    int uFreq  = 1;
+    if(tFreq.containsKey(text.charAt(i))){
+      uFreq += tFreq.get(i);
+    }
+    tFreq.put(text.charAt(i),uFreq);
+
+    if(isPermutation(pFreq,tFreq){
+      results.add(si);
+    }
+  }
+
+
+boolean isPermutation(Map<Character,Integer> pFreq,Map<Character,Integer> tFreq){
+
+  if(pFreq.size() == tFreq.size()){
+  	for(Entry.Map<Character,Integer> entry : tFreq.entrySet()){
+    	if(pFreq.containsKey(entry.getKey()){
+      	if(pFreq.get(entry.getKey()) != tFreq.get(entry.getKey())){
+        	return false;
+      	}
+    	}
+      else{
+      	return false;
+    	}
+  	}
+  	return true;
+  }
+  return false;
+}
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------
+
+
+/******************************************************************************
+
+                            Online Java Debugger.
+                Code, Run and Debug Java program online.
+Write your code in this editor and press "Debug" button to debug program.
+
+*******************************************************************************/
+// 2 7 5 1 4 -- > all combinations.. : { 2 .. 4, { 2,3 ,75.. } . {
+// 123 --  null , 1, 2 ,3 , 12, 13, 23, 123;
+//  122 ---
+
+import java.lang.*;
+// import java.lang.Math.*;
+
+import java.util.*;
+
+public class Main
+{
+	public static void main(String[] args) {
+		System.out.println("Hello World");
+		int[] input = {1,2,3,4};
+	//	generateAllCombinations(input);
+		orderedCombinationPrinter(input);
+
+	}
+
+
+	public static void generateAllCombinations(int[] input){
+
+	   if(input.length > 0){
+    	   int len = input.length;
+    	   Integer maxCombi = getPow(2,len);
+    	   System.out.println("maxCombi = "+ maxCombi + " for len="+ len);
+    	   for(int i=0;i<maxCombi;i++){
+    	       int  temp = i;
+    	       for(int j=0;j<len;j++){
+    	        //   System.out.println("for i="+i+" temp="+temp);
+    	           if((temp&1) == 1){
+    	               System.out.print(input[j] + " ");
+    	           }
+    	           temp = temp>>1;
+
+    	       }
+    	       System.out.println("");
+	        }
+	   }
+
+	}
+
+
+	public static int getPow(int i, int exp){
+	    int res = 1;
+	    while(exp>0){
+	       // System.out.println(" i = ")
+	        res= res * i;
+	        exp--;
+
+	    }
+
+	    return res;
+	}
+
+
+	public static void orderedCombinationPrinter(int[] input){
+	    int len = input.length;
+	    Map<Integer,List<List<Integer>>> levelMap = new HashMap<>();
+	    for(int i=0;i<len;i++){
+	        levelMap.put(input[i],new ArrayList<>());
+	        levelMap.get(input[i]).add(new ArrayList<>(Arrays.asList(input[i])));
+	    }
+
+	    int j = len;
+	    while(!levelMap.isEmpty() && j>0){
+	        System.out.println("total entries to be processed: " + levelMap.size());
+    	    for(int i = 0;i<len;i++){
+    	       List<List<Integer>> levelSet = levelMap.get(input[i]);
+    	       printLevel(levelSet);
+    	       //levelSet.removeAll();
+    	       levelMap.remove(input[i]);
+    	       List<List<Integer>> newlevelSetlevelSet = new ArrayList<>();
+    	       for(Map.Entry<Integer,List<List<Integer>>> entry:levelMap.entrySet()){
+    	               List<List<Integer>> levelSetInt = entry.getValue();
+    	               for(List<Integer> intList: levelSetInt){
+    	                   List<Integer> tmpList = new ArrayList<>(intList);
+    	                   tmpList.add(input[i]);
+    	                   newlevelSetlevelSet.add(tmpList);
+    	               }
+
+    	       }
+    	       System.out.println("for "+input[i]+ " got "+ newlevelSetlevelSet.size());
+    	       levelMap.put(input[i],newlevelSetlevelSet);
+
+    	    }
+    	    j--;
+	    }
+
+	}
+
+	public static void printLevel(List<List<Integer>> input){
+	    for(List<Integer> lis: input){
+	        for(Integer i:lis){
+	            System.out.print(i + " ");
+	        }
+	        System.out.println("");
+	    }
+
+	}
+
+
+
+
+
+
+
+
+
+}

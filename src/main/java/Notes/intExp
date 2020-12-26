@@ -1,0 +1,3 @@
+MS - SSE
+1. Design OTP service : Confused SDK with jar, not clear on rest endpoints and their I/O + justification for their inputs.
+2. Designing Queuing Solution for 1:1 and PubSub models. - added handlers map for each queue to queing sdk ( again confusing here)!! and then removed handlers! - bahut sara raita
