@@ -1,0 +1,19 @@
+// Heaps
+
+PriorityQueue<Integer> pq = new PriorityQueue<>(); -- minheap
+//methods
+pq.peek();
+pq.poll();
+pq.add();
+
+
+PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+
+
+
+
+
+
+
+

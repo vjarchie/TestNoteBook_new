@@ -49,7 +49,6 @@ class AssetData {
 
 public class ArcesiumCalculator {
 
-
     public static void populateHoldingData(String date, Map<String, AssetData> assetDataMap) {
         String urlString = "https://raw.githubusercontent.com/arcjsonapi/HoldingValueCalculator/master/paging/holding_start";
         Gson gson = new Gson();

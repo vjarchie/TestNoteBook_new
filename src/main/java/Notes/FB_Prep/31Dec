@@ -1,0 +1,90 @@
+// coin change
+
+variables : dp[i] - fewest no. of coins required to make amount i
+n : coins.length;
+recurrence :
+
+dp[i] = 1+dp[i-k] where coins[i] where i : 0-n
+
+base :
+
+dp[0] =0;
+
+ int n = coins.length;
+        int[] dp = new int[amount+1];
+        Arrays.fill(dp,amount+1);  -- optimization
+        dp[0]=0;
+        for(int i=1;i<=amount;i++){
+                for(int j=0;j<n;j++){
+                    if(i>=coins[j]){
+                        dp[i] = Math.min(dp[i],dp[i-coins[j]]+1);
+                    }
+                }
+
+        }
+        return dp[amount]>amount?-1:dp[amount];
+
+
+/////word break :
+
+ques : if word can be constructed from dictionary words
+
+state :
+
+    i: index of word we are at
+    dp[i] : whether string upto i can be constructed
+    return dp[s.length-1]
+
+recurrence :
+ dp[i] = true if s.substring(i-word.length+1,i+1) == word && dp[i-word.length]=true
+
+
+ public boolean isSentencePossible(String s,String[] words){
+    boolean[] dp = new boolean[s.length()];
+    for(int i=0;i<s.length;i++){
+        for(String s:words){
+            if(i>words.length()-1 && (i==words.length()-1 || dp[i-words.length())){
+                if(s.substring(i-words.length+1,i+1).equals( word))
+                    dp[i]=true;
+                    break;
+            }
+        }
+    }
+    return dp[s.length()-1];
+ }
+
+
+ /// LIS
+
+ state :
+
+  dp[i] = length of maximum subsequence ending at i;
+
+ recurrence:
+    dp[i] = 1+ max (dp[j] where 0<j<i && arr[j]<arr[i])
+
+base : every element has subsequence length 1
+
+public int lis(int[] nums){
+    int n = nums.length;
+    int[] dp = new int[n];
+    Arrays.fill(dp,1);
+    int max =1;
+    for(int i=1;i<n;i++);
+    {
+      for(int j=i-1;j>=0;j--){
+        if(nums[i]>nums[j]){
+            dp[i]=dp[j]+1;
+            break;
+        }
+      }
+    }
+    return dp[n-1];
+    }
+
+
+}
+
+
+
+

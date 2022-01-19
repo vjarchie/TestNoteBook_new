@@ -1,0 +1,18 @@
+// fibonacci with memoizaton
+// required code optimization- redundant code.
+
+Map<Integer,Integer> cache = new HashMap<>();
+public int nThFibonacci(int n){
+    if(cache.containsKey(n))
+        return cache.get(n);
+    int result;
+    if(n<2){
+        result = n;
+    }
+     int nprev1 = nThFibonacci(n-1);
+     int nprev2 = nThFibonacci(n-2);
+     result = nprev1+nprev2;
+     cache.put(n,result);
+     return result;
+
+}

@@ -1,0 +1,200 @@
+// DP - LCS
+
+variables :
+l1.length - m
+l2.length - n
+
+DS
+
+dp(i,j) - longest common subsequence till i and j characters from m and n.
+dp(i,j) = 1+ dp(i-1,j-i) if(l1[i]==l2[j])
+else max(dp(i-1,j,dp(i,j-1));
+
+base : i<0 | j<0 return 0;
+
+
+!! works
+// tabulation VVV
+
+
+public int longestCommonSubsequence(String text1,String text2){
+    int m = text1.length();
+    int n = text.length();
+    if(m==0 || n==0)
+        return 0;
+    int[][] dp = new int [m][n];
+    for(int i=m-1;i>=0;i--){
+        for(int j=n-1;j>=0;j--){
+            if(text1.charAt(i)==text2.charAt(j))
+            {
+                dp[i][j]=1+dp[i+1][j+1];
+            }else{
+            dp[i][j] = Math.max(dp[i+1][j],dp[i][j+1]);
+            }
+        }
+    }
+    return dp[0][0];
+}
+
+// for memoization we can start loop from 0 to m-1, o to n-1  but tabulation we did reverse to avoid last row and column initialization by brute approach
+
+
+
+
+greedy ?? - not possible
+
+
+2.. Maximal Square :
+
+
+// dp [row][col] = maximum size square with bottom right corrner at (row,col);
+
+
+// dp[row][col] = 1+ min(dp[i-1][j-1],dp[i-1][j],dp[i][j-1]);
+
+
+
+
+
+public int maximalSquare(char[][] matrix){
+    int row = matrix.length;
+    int col = matrix[0].length;
+    int[][] cache = new int[row+1][col+1]; // to check the last row and column too
+    int maxValue = 0;
+
+
+    for(int i=1;i<row;i++){
+        for(int j=1;j<col;j++){
+            if(matrix[i-1][j-1]=='1'){  // to take the first row and col
+                cache[i][j] = 1 + Math.min(cache[i-1][j-1],Math.min(cache[i-1][j],cache[i][j-1]));
+                if(cache[i][j]>maxValue){
+                    maxValue=cache[i][j];
+                }
+            }
+        }
+    }
+
+    return maxValue*maxValue; // AREA!!!!
+
+}
+
+
+// minimum difficulty job schedule
+
+variables : d days , difficulty ( max of all jobs for a day ) in array for n jobs , job index i
+
+function :
+
+dp(i,day ) -> minimum difficulty of job schedule which starts on ith job and 'day' - day
+
+minimum jobs we should leave for next days : (d-day)
+
+for a day possible jobs -> [i to n-(d-day)-1] : j
+
+hardest  -> hardest job on a day
+
+hence :::
+
+dp(i,day) = min ( hardest +dp(j+1,day+1)) for i<=j<n-(d-day) and hardest = max(jobDifficulty[k]) for i<=k<=j
+
+
+base :
+
+if day==d then return max(jobDifficulty[i:])
+
+
+
+if(n<d) return -1;
+
+
+Top Down :
+
+
+Class Solution {
+    private int n,d ;
+    private int[][] cache ;
+    private int[] jobDifficulty;
+    private int[] hardestJobRemaining;
+
+
+    public int dp(int i,int day){
+        if(day==d){
+        return hardestJobRemaining[i];
+        }
+        if(cache[i][day]==0){
+            int best= Integer.MAX_VALUE;
+            int hardest = 0;
+            for(int j=i;j<n-(d-day);j++){
+                hardest = Math.max(hardest,jobDifficulty[i]);
+                best = Math.min(best,hardest+dp(j+1,day+1));
+            }
+            cache[i][day]=best;
+        }
+        return cache[i][day];
+        }
+
+
+        public int minDifficulty(int[] jobDifficulty,int d){
+                n = jobDifficulty.length;
+
+                if(n<d){
+                    return -1;
+                }
+                hardestJobRemaining = new int[n];
+                int hardestJob = 0
+                for(int i=n-1;i>=0;i--){
+                    hardestJob = Math.max(hardestJob,jobDifficulty[i]);
+                    hardestJobRemaining[i]=hardestJob;
+                }
+
+                this.d = d;
+                this.jobDifficulty = jobDifficulty;
+                cache = new int[n][d+1];
+                return dp(0,1);
+
+            }
+
+
+    }
+
+
+
+
+bottom up :
+
+public int minDifficulty(int[] jobDifficulty,int d){
+    int n = jobDifficulty.length;
+    if(n<d)
+        return -1;
+
+    int[][] dp = new int[n][d+1];
+    for(int[] row:dp){
+        Arrays.fill(row,Integer.MAX_VALUE);
+    }
+
+    dp[n-1][d]=jobDifficulty[n-1];
+
+    for(int i=n-2;i>=0;i++){
+        dp[i][d] = Math.max(jobDifficulty[i],dp[i-1][d]);
+    }
+
+    for(int day = d-1;day>0;day--){
+        for(int i=day-1;i<n-(d-day);i++){
+            int hardest=  0;
+            for(int j=i;j<n-(d-day);j++){
+                hardest = Math.max(hardest,jobDifficulty[j]);
+                dp[i][day] = Math.min(dp[i][day],hardest +dp[j+1][day+1]);
+            }
+        }
+    }
+    return dp[0][1];
+}
+
+
+
+
+
+
+
+
+

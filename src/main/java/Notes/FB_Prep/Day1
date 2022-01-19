@@ -1,0 +1,48 @@
+// rotate array by s right :
+
+public void rotateArrayRight(int[] arr,int s){
+    if(arr.length >0 ){
+        //1. one round at a time << left
+        for(int i=0;i<s;i++)
+        {
+            int temp = arr[0]; // for right - last element
+            for(int j=1;j<arr.length;j++){
+                arr[j-1]=arr[j];
+            }
+            arr[length-1]=temp; // for right arr[0] = temp
+
+        }
+        // 2. break and copy
+        int off = s;
+        if(s > arr.length){
+            off = s%arr.length
+        }
+        int temp = new int[off];
+        for(int i=0;i<off;i++)
+            temp[i]=arr[i];
+        int j=0;
+        for(int i=off;i<arr.length;i++){
+            arr[j++]=arr[off];
+        }
+        for(int i=off,j=0;i<arr.length;i++,j++){
+            arr[i]=temp[j];
+        }
+        // 3. revers^3
+        reverseArrFromItoJ(arr,0,s);
+        reverseArrFromItoJ(arr,s+1,arr.length-1);
+        reverseArrFromItoJ(arr,0,arr.length-1);
+
+    }
+
+}
+
+public void reverseArrFromItoJ(int[] arr,int i,int j){
+        if(arr.length>0){
+            while(i<j){
+                int temp = arr[i];
+                arr[i]=arr[j];
+                arr[j]=temp;
+                i++,j--;
+            }
+        }
+    }

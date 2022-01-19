@@ -1,0 +1,35 @@
+//Recursion
+
+public void printStringReverseRecursed(String str){
+   printStringReverseUtil(str,0);
+}
+
+public void printStringReverseUtil(String str,int i){
+    if(str == null || i>str.length())
+        return;
+    printStringReverseUtil(str,i+i);
+    System.out.print(str.charAt(i));
+
+}
+
+public void reverseArray(char[] arr,int i,int j){
+if(i>=j || i> arr.length || j> arr.length)
+return;
+char temp = arr[i];
+arr[i]= arr[j];
+arr[j]=temp;
+reverseArray(arr,i+1,j-1);
+
+}
+// pair swap LL and return head
+
+public ListNode swapPairs(ListNode head) {
+    if(head != null && head.next != null)
+     {
+    ListNode temp = head;
+    head.val = head.next.val;
+    head.next.val= temp.val;
+    swapPairs(head.next.next);
+    }
+   return head;
+ }

@@ -1,0 +1,32 @@
+// Caeser Cipher
+
+private char rotateUpperChar(char c,int s){
+    return (char)(((int)c+s-65)%26+65);
+}
+
+private char rotateLowerChar(char c,int s){
+    return (char)(((int)c+s-97)%26+97);
+}
+private char rotateNumber(char i,int s){
+    return (i+s)%10;
+}
+
+String rotationalCipher(String input, int rotationFactor) {
+    StringBuilder result = new StringBuilder();
+    if(input != null && input.length()>0){
+        for(int i=0;i<input.length();i++){
+            if(Character.isDigit(input.charAt(i))
+                result.append(rotateNumber(input.charAt(i),rotationFactor));
+            else if (Character.isUpperCase(input.charAt(i))
+                result.append(rotateUpperChar(input.charAt(i),rotationFactor);
+            else if(Character.isLowerCase(input.charAt(i))
+                result.append(rotateLowerChar(input.charAt(i),rotationFactor));
+            else
+                result.append(input.charAt(i));
+        }
+
+    }
+
+    return result.toString();
+  }
+

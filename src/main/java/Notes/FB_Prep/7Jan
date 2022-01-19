@@ -1,0 +1,107 @@
+//Union-Find
+
+Quick Find - root immediately available O(1). For union will have to traverse entire array to update. O(n)
+
+Class UnionFind{
+    private int[] root;
+
+    public UnionFind(int n){
+        root = new int[n];
+        for(int i=0;i<n;i++){
+            root[i] = i;
+        }
+
+    }
+
+    public int find(int x){
+        return root[x];
+    }
+
+    public void union(int x,int y){
+        int rootX = root[x];
+        int rootY = root[y];
+        if(rootX != rootY){
+            for(int i=0;i<root.length;i++){
+                if(root[i] == rootY)
+                    root[i] = rootX;
+            }
+        }
+    }
+
+    public boolean connected(int x,int y){
+        return root[x] == root[y];
+    }
+
+}
+
+// word ladder
+
+public int ladderLength(String beginWord,String endWord,List<String> wordList){
+    if(wordList.isEmpty() || !wordList.contains(endWord) || beginWord.equals(endWord))
+        return 0;
+    wordList.add(beginWord);
+    Map<String,List<String>> adjList = new HashMap<>();
+    for(int i=0;i<wordList.size();i++){
+        adjList.put(wordList.get(i),new ArrayList<>());
+    }
+    for(int i=0;i<wordList.size()-1;i++){
+        for(int j=i+1;j<wordList.size();j++){
+            if(isConnection(wordList.get(i),wordList.get(j))){
+                adjList.get(wordList.get(i)).add(wordList.get(j));
+                adjList.get(wordList.get(j)).add(wordList.get(i));
+            }
+        }
+    }
+
+    int step = 0;
+    Queue<String> queue = new LinkedList<>();
+    queue.offer(beginWord);
+    Map<String,Boolean> track = new HashMap<>();
+    track.put(beginWord,true);
+    while(!queue.isEmpty()){
+        for(int i=0;i<queue.size();i++){
+            String p = queue.poll();
+                if(p.equals(endWord))
+                    return step;
+             track.put(p,true);
+             for(int i=0;i<adjList.get(p).size();i++){
+                if(!track.get(adjList.get(p).get(i))){
+                    queue.offer(adjList.get(p).get(i));
+                }
+             }
+
+        }
+        step++;
+    }
+
+    return step;
+
+
+
+}
+
+public boolean isConnection(String word1,String word2){
+    if(Math.abs(word1.length()-word2.length()>1){
+        return false;
+    }
+     int diff=0;
+    for(int i=0;i<Math.max(word1.length(),word2.length();i++){
+        if(i>word1.length()-1 || i>word2.length()-1){
+            diff++;
+            break;
+        }
+        if(word1.charAt(i) != word2.charAt(i)){
+            diff++;
+            if(diff > 1)
+            return false;
+        }
+    }
+    return diff==1;
+
+}
+
+
+
+
+
+

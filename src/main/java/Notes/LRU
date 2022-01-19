@@ -1,0 +1,167 @@
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+
+// 1 - 2
+// 2 - 1
+// 1 - 3 :
+//
+
+
+class LRUCache {
+
+    private Map<Integer,DLLNode> cache = new HashMap<>();
+    private DLL dll;
+    private int counter;
+
+    public LRUCache(int capacity) {
+        this.counter = capacity;
+        this.dll = new DLL();
+    }
+
+    public int get(int key) {
+        if(cache.containsKey(key)){
+            DLLNode result = cache.get(key);
+            dll.updateQueue(result);
+            return result.value;
+        }
+        return -1;
+    }
+
+    public void put(int key, int value) {
+        if(cache.containsKey(key)){
+            DLLNode val = cache.get(key);
+            val.value = value;
+            cache.put(key, val);
+            dll.updateQueue(val);
+        }
+        else{
+            if(counter >0){
+                DLLNode node = new DLLNode(value);
+                cache.put(key, node);
+                counter--;
+                dll.addFirst(node);
+            }else{
+                dll.removeLast();
+                counter++;
+                put(key, value);
+            }
+        }
+    }
+
+    // private void removeLRUElement(){
+    //     if(!queue.isEmpty()){
+    //         Integer key = queue.removeLast();
+    //         cache.remove(key);
+    //         counter++;
+    //     }
+    // }
+
+}
+
+class DLLNode {
+    public int value;
+    public DLLNode left;
+    public DLLNode right;
+    public DLLNode(int value){
+        this.value = value;
+    }
+}
+
+class DLL{
+
+    DLLNode head;
+    DLLNode tail;
+    public void addFirst(DLLNode node){
+        if(head == null){
+            // first node;
+            node.left = null;
+            node.right = null;
+            head = node;
+            tail = node;
+        }
+        else{
+            node.left = null;
+            node.right =  head;
+            head.left = node;
+            head = node;
+        }
+    }
+
+    public DLLNode removeLast(){
+        if(tail != null){
+            if(tail == head){
+                DLLNode temp = tail;
+                head = null;
+                tail = null;
+                return temp;
+            }else{
+                DLLNode left = tail.left;
+                left.right = null;
+                tail = left;
+
+                return left;
+            }
+        }
+        return null;
+    }
+
+    public void updateQueue(DLLNode node){
+       if(node != head){}
+        DLLNode left = node.left;
+        DLLNode right = node.right;
+        if(left != null){
+            left.right = right;
+        }
+        if(right != null){
+            right.left = left;
+        }
+        addFirst(node);
+    }
+
+    public void print(){
+        DLLNode temp = head;
+        while(temp != null){
+            System.out.print( temp.value + " ->");
+        }
+        System.out.println("");
+    }
+
+
+}
+
+public class Solution {
+    public static void main(String args[]) throws Exception {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int cacheSize = Integer.parseInt(bufferedReader.readLine().trim());
+        LRUCache cache = new LRUCache(cacheSize);
+        int operationCount = Integer.parseInt(bufferedReader.readLine().trim());
+
+        for (int i = 0; i < operationCount; i++) {
+            final String operationString = bufferedReader.readLine().replaceAll("\\s+$", "");
+            final String[] operationWithArgs = operationString.split(":");
+            switch (operationWithArgs[0]) {
+                case "get":
+                    int lastGetResult = cache.get(Integer.parseInt(operationWithArgs[1]));
+                    bufferedWriter.write(String.valueOf(lastGetResult));
+                    bufferedWriter.newLine();
+                    break;
+                case "put":
+                    final String[] oprArgs = operationWithArgs[1].split(",");
+                    cache.put(Integer.parseInt(oprArgs[0]), Integer.parseInt(oprArgs[1]));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}

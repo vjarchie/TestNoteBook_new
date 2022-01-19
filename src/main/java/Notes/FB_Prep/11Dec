@@ -1,0 +1,19 @@
+// 1-2 stairs approaches
+
+1. Ways(n) = Fibonacci(n+1) ( 2^n )
+ ways(1) = fib(2) = 1
+ ways(2) = fib(3) = 2
+    code :
+    int fib(int n){
+        if(n<2) return n;
+        return fib(n-1)+fib(n-2)
+    }
+
+    int ways(int n){
+     return fib(n+1);
+    }
+
+ 2.
+
+
+

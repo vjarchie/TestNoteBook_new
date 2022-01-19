@@ -1,0 +1,14 @@
+// multidimensional DP :
+
+
+more dimension = more difficult
+// try out 5 dimension dp problem
+
+// framework works for any no. of dimensions!!!
+
+// possible state variables :
+ - index of input dp(i)
+ - possible two indexes like frame dp(i,j)
+ - other state contraints
+
+

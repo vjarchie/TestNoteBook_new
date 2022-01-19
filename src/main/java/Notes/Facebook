@@ -124,6 +124,21 @@ int getSumOfMaxPath(TreeNode root,Integer max){
 
 
 
+Attempt 2
+
+1. Match Strings with * in between representing backspace.
+- took too much time for problem solving and optimizing.
+- approach 1: using two stacks. ( forgot methods of stack in java)
+- approach 2: parse from end. ( couldnt code)
+
+2. find if subarray sum is equal to k:
+- discussed sliding window. : solution only worked for positive target values.
+- couldnt give negative scenario for the solution.
+- many logical mistakes overlooked during dry run. : do a syntax analysis, then example run, then edge cases!!
+
+
+
+
 
 
 
