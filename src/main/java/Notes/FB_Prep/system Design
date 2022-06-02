@@ -1,0 +1,42 @@
+ process
+    ‘Always listen to interviewer - hints/ feedback/direction’
+
+ 1. Requirements  - 5 minutes
+    Functional -> Use Cases ( dont add more than what you can cover)
+    Non fucntional -> Nature of system/Audititg/Monitoring/Security
+    "What User experience looks like / high end low end devices/ access to internet or not.
+     Ask which parts to explore.
+     Ask is this relevant? "
+     "Devices support?"
+     "network support"
+     "Data nature - Data lifecycle - Data sanity"
+     "ask minimum 5 questions."
+     System Nature - Available - Consistent - Reliable/Durable
+
+ 2. Estimation - use calculator
+    simple estimation 1-2 min , TPS support.
+    "quantitative analysis - more important for system design. ( ask yourself any no, KPIs to take care of)""
+
+ 3. High Level Overview or System Interface Design:
+    Entities + Rough HLD
+    "High Level Complete Proposal - 10-15 minutes. "
+
+ 4. Deep Dive:
+    "how architecture handle data.
+     	completeness of solution.
+     		meet functional and non functional requirements
+     		identify bottlenecks that could occur.
+     	component responsibilities.
+     	Better api = better component responsibilities."
+    "Deep Dive - 15 minutes ( no less than 10 minutes)
+         	2 -3 TOPICS OF ARCHITECTURE
+         	TRADEOFF again.
+         	!!!!DONT USE BUZZWORDS!!!"
+
+  5. Bottlenecks!
+        - points of failure
+        - Error Handling
+        - monitoring/performance
+
+
+

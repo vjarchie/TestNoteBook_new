@@ -1,0 +1,234 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+
+
+class Result {
+
+    /*
+     * Complete the 'findRoot' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts 2D_INTEGER_ARRAY nodes as parameter.
+     */
+
+    public static int findRoot(List<List<Integer>> nodes) {
+        if(!nodes.isEmpty()){
+            Set<Integer> roots = new HashSet<>();
+            Set<Integer> children = new HashSet<>();
+            Set<Integer> leaf = new HashSet<>();
+            Set<Integer> potLeaf = new HashSet<>();
+            for(List<Integer> node:nodes){
+                if(roots.contains(node.get(0))){
+                    return -1;
+                }
+                else{
+                    if(!children.contains(node.get(0))){
+                        System.out.println("add to r" + node.get(0));
+                     roots.add(node.get(0));
+                    }
+
+                    // capture all leaf
+                    if(node.get(1) == -1 && node.get(2)==-1){
+                        potLeaf.add(node.get(0));
+                        leaf.add(node.get(0));
+                    }else{
+                    potLeaf.remove(node.get(0));
+                    if(node.get(1) != -1){
+                        potLeaf.add(node.get(1));
+                        if(roots.contains(node.get(1))){
+                            System.out.println("rem1"+node.get(1));
+                            roots.remove(node.get(1));
+                        }
+                        if(children.contains(node.get(1))){
+                            return -1;
+                        }
+                        children.add(node.get(1));
+                    }
+                    if(node.get(2) != -1){
+                        potLeaf.add(node.get(2));
+                        if(roots.contains(node.get(2))){
+                            System.out.println("rem2"+node.get(2));
+                            roots.remove(node.get(2));
+                        }
+                        if(children.contains(node.get(2))){
+                            return -1;
+                        }
+                        children.add(node.get(2));
+                    }
+                    }
+                }
+            }
+            for(Integer i:potLeaf){
+                System.out.println( " pot " + i);
+            }
+            for(Integer i:leaf){
+                System.out.println( " lef " + i);
+            }
+            for(Integer i:leaf){
+                potLeaf.remove(i);
+            }
+            if(potLeaf.size()>0)
+                return -1;
+            System.out.println("size:" + roots.size());
+            return roots.size() != 1? -1:roots.iterator().next();
+        }
+
+        return -1;
+
+    }
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int nodesRows = Integer.parseInt(bufferedReader.readLine().trim());
+        int nodesColumns = Integer.parseInt(bufferedReader.readLine().trim());
+
+        List<List<Integer>> nodes = new ArrayList<>();
+
+        IntStream.range(0, nodesRows).forEach(i -> {
+            try {
+                nodes.add(
+                    Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+                        .map(Integer::parseInt)
+                        .collect(toList())
+                );
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        int result = Result.findRoot(nodes);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
+
+
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+/*
+We are given a one dimensional terrain represented by an array, where the index represents the coordinate and the value represents the altitude. We also have a bucket of water. We dump this bucket of water in a single point of the terrain, and the water will collect at various points of the basins in the terrain. Write a function which takes in the terrain, the amount of water, dump point, and then print out the image of the resulting terrain. Use + to represent earth and W to represent water.
+
+A terrain of [5,4,2,1,2,3,2,1,0,1,2,4] will look like
+
+
+[1 2 3 4 5]
+
+
+
+
+case 1 : i is local minima
+case 2:
+
++
+++         +
+++   +     +
++++ +++   ++
+++++++++ +++
+++++++++++++
+
+elevation => [5,4,2,1,2,3,2,1,0,1,2,4]
+water_amount = 8
+dump_location = 1
+
++
+++         +
+++WWW+     +
++++W+++WWW++
+++++++++W+++
+++++++++++++
+
+
+elevation => [5,4,2,1,2,3,2,1,0,1,2,4]
+
+output => [5,4,3,3,3,3,2,2,2,2,2,4]
+
+
+2 1 2 - >
+w : 1
+d : 0
+
++ +
++++
++++
+
+*/
+
+public class Solution {
+
+ public static void main(String[] args) {
+
+        printSolution(new int[] {5,4,2,1,2,3,2,1,0,1,2,4}, new int[] {5,4,3,3,3,3,2,2,2,2,2,4});
+   }
+
+
+
+
+public static void printSolution(int[] elevation, int[] output){
+    List<String> lines = new ArrayList<>();
+    int n = elevation.length;
+    boolean remain = true;
+    int level = 0;
+    while(remain){
+        StringBuilder sb = new StringBuilder();
+        remain = false;
+        level ++;
+        for(int i=0;i<n;i++){
+            if(elevation[i] >=0){
+                sb.append("+");
+                elevation[i]--;
+                output[i]--;
+            }
+            else if(output[i]>=0){
+                sb.append("W");
+                output[i]--;
+            }else{
+                sb.append(" ");
+            }
+            if(output[i]>0){
+                remain = true;
+            }
+
+            for(int p=0;p<n;p++){
+               // System.out.println(elevation[p] + " :"+ output[p]);
+            }
+
+
+        }
+
+        lines.add(sb.toString());
+
+    }
+
+    for(int i=level-1;i>=0;i--){
+        System.out.println(lines.get(i));
+    }
+}
+}
+
+
+
+

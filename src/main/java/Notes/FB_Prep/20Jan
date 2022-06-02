@@ -1,0 +1,41 @@
+// Union - Find
+
+class UnionFind{
+
+    int[] root;
+    int[] rank;
+
+    public UnionFind(int k){
+        this.root = new int[k];
+        this.rank = new int[k];
+        for(int i=0;i<ki++){
+            root[i] = i;
+            rank[i] = 1;
+        }
+    }
+
+    public int find(int k){
+        if( k == root[k])
+            return root[k];
+        return root[k] = find(root[k]);
+    }
+
+    public void union(int l,int r){
+        int lroot = find(l);
+        int rroot = find(r);
+        if(lroot != rroot){
+            if(rank[lroot] >rank[rroot]){
+                root[rroot] = lroot;
+            }else if(rank[rroot] > rank[lroot]){
+                root[lroot] = rroot;
+            }else{
+                root[lroot] = rroot;
+                rank[rroot] +=1;
+            }
+        }
+    }
+
+    public boolean connected(int x,int y){
+        return find(x) == find(y);
+    }
+}

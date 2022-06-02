@@ -137,6 +137,285 @@ Attempt 2
 - many logical mistakes overlooked during dry run. : do a syntax analysis, then example run, then edge cases!!
 
 
+follow up interview :
+
+1. find any  local minima in an array
+- proposed linear approach and with binary search
+- this was on point as i broke it down into cases.
+
+2. find pair sum in two arrays with same index
+- suggested linear search, with map to track
+- got hint to use key as combined string of entries from both arrays
+- implemented in O(n)
+
+
+On-site
+
+1. Product Design Interview - no hire - didnt piece together a system/ over engineering on some parts ignoring rest.
+https://whiteboard.facebookrecruiting.com/#room=647182069729703,RjNAeXjvb1dDnZxk5mWRpz 'or' use the file in this folder
+- Requirement gathering I stuck to just string transformation.
+- could have been entire static contents
+- could have been aspect based
+- not much HLD shared
+- lot of prompting for api definition, was muddled in thought
+- lower lld also not refined.
+- had proposed a library, but not thought of feedback for langugage transformation, ml ? expose as service?
+
+
+2. Coding 1 : - first question too long to solve - pass  : ( not ic5, implementation had issues, repetition when stuck.. weak communication)
+
+2.1 . find duplicates in subarray  of size k :
+- input int[] , int k
+- proposed a set for each subarray.
+- miscalculated the complexity to be O(n3) !!!!
+- should have been O(nk)
+- was asked to reduce the complexity to O(n) and space O(k)
+- suggested single iteration fixed size window, with left and right variables to track adding and evicting element
+- messed up edge case handling, fixed it quite later
+
+2.2. String with minimum paranthesis removed, so that string is balanced
+- proposed checking balance on string and reverse string
+- wrote a modular code
+- self corrected a scenario, where balance was incrementing in negative, fixed it to revert to 0
+
+
+3. Coding 2 :( disaster!) - no hire ( ic4 if other coding strong) - implementation strange/ couldnt tackle medium.
+
+
+
+Welcome to Meta!
+
+This is just a simple shared plaintext pad, with no execution capabilities.
+
+When you know what language you would like to use for your interview,
+simply choose it from the dropdown in the top bar.
+
+Enjoy your interview!
+
+
+  hi
+
+
+
+
+
+Implement the power function that computes a to the power of b using basic arithmetic operations (+, -, *, /).
+
+Example:
+a = 3, b = 4, a^b = 3 * 3 * 3 * 3 = 81
+
+
+  O(b) ->
+
+  a = 0, b = 1
+
+  public int computePower(int a, int b){
+
+    if  (b== 0)
+      return 1;
+
+    if(a == 0)
+      return 0;
+
+    int A;
+
+
+    if(a<0) {
+
+       A = 1/a;
+
+    }
+
+    Map<Integer,Integer> computeMap = new HashMap<>();
+
+    computeMap.put(1,A);
+
+    return computePowerUtil(A,B,stash);
+
+  }
+
+
+public int computePowerUtil(Integer A,Integer B, Map<Integer,Integer> stash){
+
+  if(stash.containsKey(B)){
+   return stash.get(B);
+  }
+
+  int mod = B%2;
+
+  int halfB = B/2;
+
+  int result = computePowerUtil(A,halfB,stash);
+
+   result *=result;
+
+  if(mod == 1){
+
+    result *=A;
+  }
+
+//  stash.put(B,result);
+//  return stash.get(B);
+
+  return result;
+
+//  return mod == 1? result
+
+}
+
+
+
+
+
+
+
+
+Given a binary tree made of these nodes, convert it, in-place (i.e. don't allocate new Nodes), into a circular doubly linked list in the same order as an in-order traversal of the tree.
+Here is a struct definition for a node that works for both binary trees and doubly-linked lists:
+
+struct Node {
+  struct Node* left;
+  struct Node* right;
+  int data;
+}
+
+Example 1:
+
+Input
+-> A
+  /
+ B
+  \
+   C
+
+Output
+-> B <-> C <-> A
+   ^           ^
+   |___________|
+   (circular)
+
+Example 2:
+
+    |
+  __4__
+ |     |
+ 2     6
+| |   | |
+1 3   5 7
+
+(from 7) ->1<->2<->3<->4<->5<->6<->7-> (to 1)
+
+i.e. vertex 1 would have following notional struct
+left: 7
+right: 2
+data: 1
+
+ Time : O(n)
+
+ space : O(n)
+
+ DLL{
+  DLLNode head;
+   DLLNode tail;
+   int size;
+
+   void addToEnd(int val){
+
+     DLLNode node = new DLLNode(va);
+     if(size == 0){
+       head = node;
+      tail = node;
+     }
+     node.prev = tail;
+     tail.next=node;
+
+     tail = node;
+
+
+   }
+
+   DLLNode getTail(){
+    return this.tail;
+   }
+
+   DLLNode getHead(){
+    return this.head;
+   }
+
+   DLLNode{
+     DLLNode prev;
+     DLLNode next;
+     int val;
+
+}
+
+
+DLL converToDLL(TreeNode root){
+
+  DLL dll = new DLL();
+  if(root != null {
+    inOrderRecurSive(root,dll);
+  }
+
+    DLL.getTail().next =DLL.getHead();
+
+
+
+
+
+  return dll;
+}
+
+
+
+void inOrderRecurSive(TreeNode node, DLL dll){
+  if(node == null)
+    return ;
+
+  // DLL leftdll;
+  inOrderRecurSive(node.left,leftdll);
+  dll.addToEnd(node.val);
+  // DLL rightdll;
+  inOrderRecurSive(node.right,rightdll);
+
+  // handle link between leftdll and node
+  // handle link between rightdll and node
+  // combine
+}
+
+4. Behavioral - weak examples for conflict resolution, value addition, tackling ambiguity and non structured environment. ( ic4 if prd design good)
+- project proud of. - myntra
+- project where problem statment was ambiguous - myntra
+- opportunities for self development - books.. etc.
+- day to day responsibilities- sprint procedure- task allocation - team structure
+- instance where conflict with people. - shared raunak instance - lot of follow up on feedback from manager
+- instance where manager rejected an approach. - no server arch
+- instance where helped someone grow - helped shreya
+- instance where provided a feedback - asked vikram to document the challenge and add to knowlege base.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
